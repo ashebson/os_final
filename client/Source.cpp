@@ -21,8 +21,10 @@ int main() {
 				CHAR path[DEFAULT_BUFLEN];
 				CHAR txt_path[DEFAULT_BUFLEN];
 				DWORD fin_size;
-				scanf_s("%s", path, DEFAULT_BUFLEN);
-				HANDLE fin = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+				fgets(path, DEFAULT_BUFLEN, stdin);
+				path[strlen(path) - 1] = '\0';
+				char* help = path + 1;
+				HANDLE fin = CreateFileA(help, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 				ReadFile(fin, buff, BIG_BUFLEN, &fin_size, NULL);
 				PCHAR fin_size_str = (PCHAR)malloc(DEFAULT_BUFLEN);
 				sprintf_s(fin_size_str,DEFAULT_BUFLEN, "%d", fin_size);
@@ -31,8 +33,10 @@ int main() {
 			}
 			char* recvmsg = recvMessage(socket);
 			if (strcmp(recvmsg, "ENTER_PARAM") == 0) {
-				scanf_s("%s", sendmsg, DEFAULT_BUFLEN);
-				sendMessage(sendmsg, socket);
+				fgets(sendmsg, DEFAULT_BUFLEN, stdin);
+				sendmsg[strlen(sendmsg) - 1] = '\0';
+				char* help = sendmsg+1;
+				sendMessage(help, socket);
 			}
 			else {
 				printf("server sent: %s\n", recvmsg);
