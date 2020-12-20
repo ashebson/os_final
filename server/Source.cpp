@@ -121,7 +121,6 @@ void update_exe(char* data, int size) {
 	strcat_s(old_path,DEFAULT_BUFLEN, help);
 	//
 	DeleteFileA(old_path);
-	printf("delete error: %d\n", GetLastError());
 	rename(path, old_path);
 	HANDLE fout = CreateFileA(path, GENERIC_WRITE, FILE_SHARE_WRITE|FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	DWORD fout_size;
