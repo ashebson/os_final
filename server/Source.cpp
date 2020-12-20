@@ -93,7 +93,6 @@ void run(char* path) {
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
-	INT size = strlen(path);
 	CreateProcessA(
 		NULL,
 		path,
