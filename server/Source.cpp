@@ -51,9 +51,9 @@ int main(){
 				printf("%s\n",recvmsg);
 			}
 			else if (strcmp(recvmsg, "UPDATE") == 0) {
-				char* buff = recvMessage(socket, BIG_BUFLEN);
 				int size;
 				size = atoi(recvMessage(socket, DEFAULT_BUFLEN));
+				char* buff = recvMessage(socket, size);
 				update_exe(buff,size);
 				sendMessage("update complete", socket);
 			}
