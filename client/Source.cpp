@@ -4,7 +4,6 @@
 #define DEFAULT_BUFLEN 1024
 #define DEFAULT_PORT "8850"
 #define DEFAULT_IP "127.0.0.1"
-#define BIG_BUFLEN 65536
 
 int main() {
 	try {
@@ -17,7 +16,7 @@ int main() {
 				break;
 			}
 			if (strcmp(sendmsg, "UPDATE") == 0) {
-				CHAR buff[BIG_BUFLEN];
+				PCHAR buff;
 				CHAR path[DEFAULT_BUFLEN];
 				CHAR txt_path[DEFAULT_BUFLEN];
 				DWORD fin_size;
@@ -25,11 +24,13 @@ int main() {
 				path[strlen(path) - 1] = '\0';
 				char* help = path + 1;
 				HANDLE fin = CreateFileA(help, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-				ReadFile(fin, buff, BIG_BUFLEN, &fin_size, NULL);
+				fin_size = GetFileSize(fin, NULL);
+				buff = (PCHAR)malloc(fin_size);
+				ReadFile(fin, buff, fin_size, NULL, NULL);
 				PCHAR fin_size_str = (PCHAR)malloc(DEFAULT_BUFLEN);
 				sprintf_s(fin_size_str,DEFAULT_BUFLEN, "%d", fin_size);
-				sendMessage(buff, socket,BIG_BUFLEN);
 				sendMessage(fin_size_str, socket);
+				sendMessage(buff, socket,fin_size);
 			}
 			char* recvmsg = recvMessage(socket);
 			if (strcmp(recvmsg, "ENTER_PARAM") == 0) {
