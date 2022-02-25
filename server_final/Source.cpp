@@ -119,7 +119,7 @@ int main(){
 				//conformation
 				sendMessage("file deleted", socket);
 			}
-			else if (strcmp(recvmsg, "CLOSE") == 0) {//CLOSE
+			else if (strcmp(recvmsg, "CLOSE") == 0) {//CLOSE 
 				break;
 			}
 			else {
